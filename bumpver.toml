@@ -11,5 +11,5 @@ push = false
 "pyproject.toml" = ['version = "{version}"']
 "gradle.properties" = ['app_version   = {version}']
 "README.md" = ['release/v{version}/gray']
-"src/main/py-gradle-template/.version" = ['{version}']
-"src/main/py-gradle-template/setup.py" = ['version="{version}"']
+"src/main/tism/.version" = ['{version}']
+"src/main/tism/setup.py" = ['version="{version}"']

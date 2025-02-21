@@ -3,7 +3,7 @@
 
 """
    @project: %PROJECT_NAME%
-   @package: py-gradle-template
+   @package: tism
       @file: __classpath__.py
    @created: %DDD, DD Mon YYYY%
     @author: AUTHOR

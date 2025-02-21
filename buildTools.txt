@@ -1,4 +1,4 @@
-###### Build Tools Files for py-gradle-template ######
+###### Build Tools Files for TI-Sem-Misterio ######
 
 setuptools
 wheel

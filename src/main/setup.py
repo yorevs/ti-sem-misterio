@@ -23,14 +23,14 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 # The version of the package
-VERSION = (HERE / "py-gradle-template/.version").read_text().strip()
+VERSION = (HERE / "tism/.version").read_text().strip()
 
 # The package requirements
 REQUIREMENTS = list(filter(None, (HERE / "requirements.txt").read_text().splitlines()))
 
 # This call to setup() does all the work
 setuptools.setup(
-    name="py-gradle-template",
+    name="tism",
     version="0.0.1",
     description="Project description",
     author="AUTHOR_NAME",
