@@ -1,0 +1,76 @@
+plugins {
+  id 'idea'
+  id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.8"
+}
+
+idea {
+  module {
+    settings {
+      rootModuleType = 'PYTHON_MODULE'
+    }
+    sourceDirs += file('src/main')
+    sourceDirs += file('src/demo')
+    testSourceDirs += file('src/test')
+    excludeDirs += file('.idea')
+    excludeDirs += file('.gradle')
+    excludeDirs += file('.vscode')
+    excludeDirs += file('.gradle')
+    excludeDirs += file('.run')
+    excludeDirs += file('run-configs')
+    excludeDirs += file('src/main/build')
+    excludeDirs += file('src/main/dist')
+    excludeDirs += file("src/main/**.egg-info")
+  }
+}
+
+configurations {
+    src
+}
+
+ext {
+  sourceRoot = "${rootDir}/src"
+  gradleDir = "${rootDir}/gradle/"
+  application = "${sourceRoot}/main/python/__main__.py"
+  pythonPath = "${sourceRoot}/main/python/:${sourceRoot}/test/python/:${sourceRoot}/demo/python/"
+  buildToolsFile = file("${project.projectDir}/buildTools.txt")
+  startTime = System.currentTimeMillis()
+  verbose = findProperty('verbose') ?: false
+}
+
+apply from: "${gradleDir}/dependencies.gradle"
+apply from: "${gradleDir}/python.gradle"
+apply from: "${gradleDir}/versioning.gradle"
+apply from: "${gradleDir}/pypi-publish.gradle"
+apply from: "${gradleDir}/docker.gradle"
+apply from: "${gradleDir}/docgen.gradle"
+apply from: "${gradleDir}/idea.gradle"
+
+/* Download and extract the gradle project ZIP */
+tasks.register('pyGradleUpdate') {
+  group = 'pygradle'
+  description = 'Download and extract the py-gradle project ZIP'
+  doLast {
+    def outFile = "${gradleDir}/py-gradle.zip"
+    def url = "https://github.com/yorevs/py-gradle/archive/master.zip"
+    println "Downloading the py-gradle project"
+    println "  From: ${url}"
+    println "  Into: ${outFile}"
+    mkdir gradleDir
+    delete fileTree(gradleDir).matching {
+      include "**/*.gradle"
+    }
+    exec {
+      commandLine 'curl', '-L', '-o', "${outFile}", url
+    }
+    copy {
+      from zipTree("${outFile}")
+      into "${gradleDir}"
+    }
+    copy {
+      from "${gradleDir}/py-gradle-master/src/main/gradle"
+      into "${gradleDir}"
+      include '**/*.gradle'
+    }
+    delete "${gradleDir}/py-gradle-master", "${outFile}"
+  }
+}

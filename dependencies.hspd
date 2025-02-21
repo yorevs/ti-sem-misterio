@@ -1,0 +1,11 @@
+/*
+  Python dependencies file
+  Project: hspylib-askai
+  Created: 05th Jan, 2024
+
+  !! Syntax for dependencies !!
+  package: <pkg_name>, version: <latest|versionNum>, mode: <gt|ge|gt|ne|gt|none>
+*/
+
+/* HSPyLib projects */
+package: hspylib, version: 1.12.46, mode: ge
